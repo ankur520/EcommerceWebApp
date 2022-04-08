@@ -1,0 +1,258 @@
+{% extends 'base.html' %} {% block title %} Add Sector Category {% endblock title %} {% block body %}
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<div class="container-fluid"> <a class="navbar-brand" href="/">Brand Logo</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav me-auto mb-2 mb-md-0">
+				<li class="nav-item"> <a class="nav-link active" aria-current="page" href="/">Home</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/adminDashboard">Admin Dashboard</a> </li>
+			</ul>
+			<div class="d-flex">
+				<ul class="navbar-nav me-auto mb-2 mb-md-0">
+					<li class="nav-item"> <a class="nav-link" href="">Logged In As </a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Id - {{ request.session.adminLoggedUserId }}
+            </a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Name - {{ request.session.adminLoggedName }}
+            </a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Email Id - {{ request.session.adminLoggedEmailId }}
+            </a> </li>
+					<li class="nav-item"> <a class="nav-link" href="/adminLogout">Logout</a> </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+
+  {% comment %}---------------  ADD SECTOR SECTION   -------------------------{% endcomment %}
+
+<div class="container mt-3">
+
+	<div class="my-5">
+		<h3 class="text-center">Add Sector</h3>
+		<div class="row">
+
+			<div class="col">
+				<form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="/AddSectorCategory"> {% csrf_token %}
+					
+          <div class="form-floating mb-3">
+						<input type="text" class="form-control" name="sectorName" id="floatingsectorname" placeholder="Sector Name" />
+						<label for="floatingsectorname">Sector Name</label>
+					</div>
+					<button class="w-100 btn btn-lg btn-success" name="addSectorBtn" type="submit"> Add Sector </button>
+				</form>
+			</div>
+
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<table class="mb-0 table table-hover">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Sector Name</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody> {% for forSector in showAllSectorss %}
+								<tr>
+									<!--  -->
+									<form method="POST" action="/AddSectorCategory"> {% csrf_token %}
+										<th scope="row">
+											<input type="text" style="width: 40px" value="{{forSector.id}}" readonly class="form-control" name="updateSectorId" /> </th>
+										<td>
+											<input type="text" value="{{ forSector.sectorName }}" class="form-control" style="border:none;" name="updateSectorName" /> </td>
+										<td>
+											<button type="submit" name="updateSectorNameBtn" class="btn btn-primary btn-sm col"> Update </button>
+										</td>
+									</form>
+								</tr> {% endfor %} </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+      
+		</div>
+	</div>
+
+
+
+	<hr>
+
+  {% comment %}---------------  ADD CATEGORY SECTION   -------------------------{% endcomment %}
+
+
+	<div class="my-5">
+		<h3 class="text-center">Add Category</h3>
+		<div class="row">
+			<div class="col">
+				<form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="/AddSectorCategory"> {% csrf_token %}
+					
+          <div class="row">
+						<div class="col-6">
+							<select class="form-select form-select-sm" name="selectSectorId" aria-label="Default select example">
+								<option selected>Sectors Name</option> {% for forSector in showAllSectorss %}
+								<option value="{{forSector.id}}">{{ forSector.sectorName }}</option> {% endfor %} </select>
+						</div>
+
+						<div class="col-6">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" name="CategoryName" id="floatingCategoryname" placeholder="CategoryName" />
+								<label for="floatingCategoryname">Category Name</label>
+							</div>
+						</div>
+					</div>
+
+					<button class="w-100 btn btn-lg btn-success" name="addCategoryBtn" type="submit"> Add Categories </button>
+				</form>
+			</div>
+
+
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<table class="mb-0 table table-hover">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Sector Name</th>
+									<th>Category Name</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody> 
+								{% for forCategory in showAllCategoryyyy %}
+								
+								<tr>
+									<!--  -->
+									<form method="POST" action="/AddSectorCategory"> {% csrf_token %}
+										<th scope="row">
+											<input type="text" style="width: 40px" value="{{forCategory.id}}" readonly class="form-control" name="updateCategoryId" /> </th>
+										<td>
+											<input type="text" value="{{ forCategory.sectorId.sectorName  }}" readOnly class="form-control" style="border:none;" /> </td>
+										<td>
+											<input type="text" value="{{ forCategory.categoryName }}" class="form-control" style="border:none;" name="updateCategoryName" /> </td>
+										<td>
+											<button type="submit" name="updateCategoryNameBtn" class="btn btn-primary btn-sm col"> Update </button>
+										</td>
+									</form>
+								</tr> {% endfor %} </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<hr>
+
+
+  {% comment %}---------------  ADD SUB CATEGORY SECTION   -------------------------{% endcomment %}
+
+
+	<div class="my-5">
+		<h3 class="text-center">Add Sub Category</h3>
+		<div class="row">
+			<div class="col">
+				<form class="p-4 p-md-5 border rounded-3 bg-light" id="indexForm" data_catrgory_url="{% url 'ajax_Adminload_category' %}" method="POST" action="/AddSectorCategory"> {% csrf_token %}
+					
+          <div class="row">
+
+            <div class="col-3">
+							<select class="form-select form-select-sm" name="selectSectors" id="selectSectors" >
+								<option selected>Sectors Name</option> {% for forSector in showAllSectorss %}
+								<option value="{{forSector.id}}">{{ forSector.sectorName }}</option> {% endfor %} </select>
+						</div>
+
+             <div class="col-3">
+							<select class="form-select form-select-sm" name="selectCategorys" id="selectCategorys" >
+					
+                </select>
+						</div>
+
+            <div class="col-6">
+              <div class="form-floating mb-3">
+						    <input type="text" class="form-control" name="subCategoryName" id="floatingSubCategoryname" placeholder="SubCategory Name" />
+						    <label for="floatingSubCategoryname">Sub Category Name</label>
+					    </div>
+            </div>
+
+          </div>
+          
+					<button class="w-100 btn btn-lg btn-success" name="addSubCategoryBtn" type="submit"> Add Sub Category </button>
+				</form>
+			</div>
+
+
+				<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<table class="mb-0 table table-hover">
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Sector Name</th>
+									<th>Category Name</th>
+                  					<th>Sub Category Name</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+
+							<tbody> 
+							{% for forSubCategory in showAllSubCategory %}
+								<tr>
+									<!--  -->
+									<form method="POST" action="/AddSectorCategory"> {% csrf_token %}
+										<th scope="row">
+											<input type="text" style="width: 40px" value="{{forSubCategory.id}}" readonly class="form-control" name="updateSubCategoryId" /> </th>
+										<td>
+											<input type="text" value="{{ forSubCategory.sectorId.sectorName }}" readOnly class="form-control" style="border:none;" /> </td>
+										<td>
+											<input type="text" value="{{ forSubCategory.categoryId.categoryName }}" readOnly class="form-control" style="border:none;" name="updateCategoryName" /> </td>
+										<td> 
+                    					<input type="text" value="{{ forSubCategory.subCategoryName }}"  class="form-control" style="border:none;" name="updateSubCategoryName" /> </td>
+                    					 </td>
+
+                   						 <td>
+											<button type="submit" name="updateSubCatNameBtn" class="btn btn-primary btn-sm col"> Update </button>
+										</td>
+									</form>
+								</tr> 
+							{% endfor %} </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div> 
+
+
+<script>
+
+
+$("#selectSectors").change(function () {
+	var url = $("#indexForm").attr("data_catrgory_url"); // get the url of tje 
+	var selectSectorsId = $(this).val(); // get the selected sector id from html input
+	// console.log(selectSectorsId)
+
+	$.ajax({
+		url: url,
+		data: {
+			'selectSectorssssss': selectSectorsId // add the secctors id to the get parameter
+		},
+		success: function(data) {
+			$('#selectCategorys').html(data);
+			// console.log("dsfasdfasdfas");
+		}
+
+	});
+})
+
+</script>
+
+
+{% endblock body %}

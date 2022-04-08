@@ -1,0 +1,145 @@
+{% extends 'base.html' %} {% block title %} User Dashboard {% endblock title %} {% block body %}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<div class="container-fluid"> <a class="navbar-brand" href="/">Brand Logo</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav me-auto mb-2 mb-md-0">
+
+				<li class="nav-item"> <a class="nav-link" href="/addProducts"> Add Products </a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/listAddedProducts"> Added Products List </a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/allAffliateProductsList"> Affliate List</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/interestedAffliateList">joined Affliate</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/userDashboard">User Dashboard</a> </li>
+			</ul>
+			
+			<div class="d-flex">
+				<ul class="navbar-nav me-auto mb-2 mb-md-0">
+					<!-- <li class="nav-item"> <a class="nav-link" href="">Logged In As</a> </li> -->
+					<li class="nav-item"> <a class="nav-link" href="">Id = {{ request.session.userLoggedUserId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Email = {{ request.session.userLoggedEmailId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Name = {{ request.session.userLoggedName }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="/userLogout">Logout</a> </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+<div class="container mt-3 ">
+	<br>
+	<h1 class="text-center mb-5">Welcome Our Both User</h1>
+	<div class="row">
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white ">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="Campaign Sent">Enrolled Affliate Programs</h5>
+							<h3 class="my-2 py-1"> xyz </h3>
+							<p class="mb-0 text-muted"><span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> xyz%</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="New Leads">Total Clicks in Affliate Products</h5>
+							<h3 class="my-2 py-1">{{ totalUsers }} cyz</h3>
+							<p class="mb-0 text-muted"><span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> xyz%</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="Deals"> Total Affliate Sale </h5>
+							<h3 class="my-2 py-1">xyz</h3>
+							<p class="mb-0 text-muted"><span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> xyz</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="Booked Revenue">Affliate Amount Earned</h5>
+							<h3 class="my-2 py-1">xyz</h3>
+							<p class="mb-0 text-muted"><span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> xyz</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<h4 class="text-center mb-5"> Added Products Portfolio </h4>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="Campaign Sent"> Added Products & Services </h5>
+							<h3 class="my-2 py-1">{{countAllProducts}} </h3>
+							<p class="mb-0 text-muted"><span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> xyz </span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="New Leads">Total Clicks </h5>
+							<h3 class="my-2 py-1">{{totalCategory}}xyz</h3>
+							<p class="mb-0 text-muted"><span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> xyz </span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="Deals">Total Sale</h5>
+							<h3 class="my-2 py-1">{{totalSubCategory}} $</h3>
+							<p class="mb-0 text-muted"><span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> xyz</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-lg-6">
+			<div class="widget-flat card">
+				<div class="card-body bg-dark text-white">
+					<div class="align-items-center row">
+						<div class="col-12 col">
+							<h5 class="fw-normal mt-0 text-truncate text-muted" title="Booked Revenue">Total Earnings </h5>
+							<h3 class="my-2 py-1">$</h3>
+							<p class="mb-0 text-muted"><span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> xyz</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> {% endblock body %}
+

@@ -1,0 +1,92 @@
+{% extends 'base.html' %} {% block title %} User Dashboard {% endblock title %} {% block body %}
+
+<div style="background-color: #d7dbe1;"> 
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<div class="container-fluid"> <a class="navbar-brand" href="">Brand Logo</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav me-auto mb-2 mb-md-0">
+				<li class="nav-item"> <a class="nav-link active" aria-current="page" href="/">Home</a> </li>
+			
+				<li class="nav-item"> <a class="nav-link" href="/userDashboard">User Dashboard</a> </li>
+			</ul>
+			<div class="d-flex">
+				<ul class="navbar-nav me-auto mb-2 mb-md-0">
+					<li class="nav-item"> <a class="nav-link" href="">Logged In As</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Id = {{ request.session.userLoggedUserId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Email = {{ request.session.userLoggedEmailId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Name = {{ request.session.userLoggedName }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="/userLogout">Logout</a> </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+
+		
+		<div class="container" >
+
+			<h2 class="text-center mt-4">List of All Products & Services you are Networking </h2>
+			<h6 class="text-center mt-4">Your Affliate Products List you Enrolled </h6>
+
+
+			<div class="row mt-5 ">
+
+				
+                <div class="col-1"></div>
+			
+	
+				<div class="col-10">
+
+		
+			
+					<table class="table table-hover bg-white">
+						<thead>
+						  <tr>
+							<th scope="col">Sno</th>
+							<th>Reffrer Name</th>
+							<th>Product Name</th>
+							<th scope="col">Affliate Unique Code</th>
+					
+						  </tr>
+						</thead>
+
+						<tbody>
+
+						{% for i in listAffliate   %}
+						  <tr>
+							<th scope="row"> {{i.id}} </th>
+							<td> {{i.userId.uName}} </td>
+							<td> {{i.productId.productName}} </td>
+						
+							<td><b> /publicAffliateCode?code={{i.affliateCode}}</b> <a class="mx-2" target="_blank" href="/publicAffliateCode?code={{i.affliateCode}}"> <b>Click Here</b>    </a> </td>
+						  </tr>
+						{% endfor %}
+						 
+						 
+						</tbody>
+					  </table>
+
+				</div>
+	
+			   <div class="col-1"></div>
+	
+			</div>
+	
+		</div>
+
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+{% endblock body %}
+
+  

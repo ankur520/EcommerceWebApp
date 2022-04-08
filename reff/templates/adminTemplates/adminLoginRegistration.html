@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign Up {% endblock title %}
+
+
+{% block body  %}
+<style>
+
+body {
+    background-image: url('static/images/4.jpg');
+}
+    
+
+</style>
+
+
+
+<h4 class="text-center text-white mt-4">Welcome to Administrator Login & Registration  </h4>
+
+
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start text-white">
+          
+        
+    <main class="form-signin container text-center">
+        <form method="POST" action="/adminLoginRegistration" >
+          {% csrf_token %}
+  
+          <h1 class="h3 mb-3 fw-normal text-white">Please sign in</h1>
+      
+          <div class="form-floating mb-3">
+            <input type="email" required name="loginInputEmail" class="form-control" id="fltemailll" placeholder="dfasd">
+            <label for="fltemailll">Email address</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="password" required name="loginInputPassword" class="form-control" id="floatingPasswordddd" placeholder="Password">
+            <label for="floatingPasswordddd">Password</label>
+          </div>
+     
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div> 
+
+          <button class="w-100 btn col-6 btn-lg btn-primary" name="adminRegisterSignInBtn" type="submit">Sign in</button>
+          <p class="mt-5 mb-3 text-white ">© 2017–2021</p>
+            <a href="/" class="text-white"> Back To Home Page </a> 
+        </form>
+    </main>
+
+    
+    </div>
+
+      <div class="col-md-10 mx-auto col-lg-5">
+        <h1 class="h3 mb-3 fw-normal text-white text-center">Please sign Up</h1>
+
+
+        <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST" action="/adminLoginRegistration">
+            {% csrf_token %}
+
+          <div class="form-floating mb-3">
+            <input type="text" required name="inputName" class="form-control" id="floatingInputname" placeholder="Your Name">
+            <label for="floatingInputname">Your Name</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="email" required name="inputEmail" class="form-control" id="floatingInputemail" placeholder="name@example.com">
+            <label for="floatingInputemail">Email address</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="password" required name="inputPassword" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <button class="w-100 btn btn-lg btn-primary" name="adminRegisterSignUpBtn" type="submit">Sign up</button>
+     
+        
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock body %}
+
+
+   
+    
+
+
+
+

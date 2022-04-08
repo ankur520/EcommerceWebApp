@@ -1,0 +1,341 @@
+{% extends 'base.html' %} {% block title %} Cart {% endblock title %} 
+{% block body %} {% comment %} START NAVIGATION {% endcomment %}
+ {% load mathfilters %}
+
+<div style="background-color: #d7dbe1">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Brand Logo</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <!-- <li class="nav-item"> <a class="nav-link" href="/adminDashboard">Admin Dashboard</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/adminLoginRegistration">Admin Sign In & Sign Up</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/userDashboard">User Dashboard</a> </li> -->
+        </ul>
+        <input class="form-control col-4" type="search" placeholder="Search" />
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            {% if request.session.userLoggedIn == True %}
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                WatchList
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=""
+                >Logged In As = {{ request.session.userLoggedEmailId }}</a
+              >
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="/signup">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/signin">Sign In</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  {% comment %} END NAVIGATION {% endcomment %}
+
+  <!-- Modal popup  -->
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Your Watch List</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">...</div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">
+            Go to WatchList Page
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end Modal popup  -->
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-2"></div>
+
+      <div class="col-9 bg-light">
+        <div class="col-12 g-12">
+          <div class="col-md-12 col-lg-12 order-md-last">
+          
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="text-primary text-center">
+                Your cart Products
+                <span class="badge bg-primary rounded-pill">
+                  {{showCartAdded|length }}</span
+                >
+              </h2>
+            </h4>
+
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for i in showCartAdded %}
+                    <tr>
+                    <form action="/viewCart" method="post">  
+                    {% csrf_token %}
+                      <th scope="row">{{i.productId.productName}}</th>
+                      <td>{{i.productId.productPrice}} $</td>
+                      <td> 
+
+                      <input type="text" value="{{i.quantity}}"  class="form-control" style="border:none; width:100px" name="updateCartQuantity" />
+                      
+                        </td>
+                      <td>{{ i.productId.productPrice|mul:i.quantity }} $</td>
+                      <td>
+
+                         <input type="text" hidden  value="{{i.id}}" name="cartId"  class="form-control" style="border:none; width:100px" name="updateCartQuantity" />
+                      
+                        <div class="row"> 
+
+                          <div class="col"> 
+                           <input
+                          type="submit"
+                          class="btn btn-warning btn-sm"
+                          value="Update"
+                          name="cartQuantityUpdateBtn"
+                        /> </div>
+                          <div class="col"> <input
+                          type="submit"
+                          class="btn btn-danger btn-sm"
+                          value="Delete"
+                          name="cartProductDeleteBtn"
+                        /> </div>
+
+                        </div>
+                       
+                      </td>
+                      </form>
+                    </tr>
+
+                    {% endfor %}
+                  </tbody>
+                </table>
+
+                {% comment %}
+                <div>
+                  <h6 class="my-0">{{i.productId.productName}}</h6>
+                  <small class="text-muted">Brief description</small>
+                </div>
+                {% endcomment %} {% comment %}
+                <div>
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <button
+                            type="button"
+                            class="btn btn-lg btn-primary btn-number"
+                            disabled="disabled"
+                            data-type="minus"
+                            data-field="quant[1]"
+                          >
+                            <span class="glyphicon glyphicon-minus">-</span>
+                          </button>
+                        </span>
+                        <input
+                          type="text"
+                          name="quant[1]"
+                          class="form-control input-number"
+                          value="1"
+                          min="1"
+                          max="10"
+                        />
+                        <span class="input-group-btn">
+                          <button
+                            type="button"
+                            class="btn btn-lg btn-primary btn-number"
+                            data-type="plus"
+                            data-field="quant[1]"
+                          >
+                            <span class="glyphicon glyphicon-plus">+</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endcomment %}
+              </li>
+
+              <form  action="/viewCart" method="post"> 
+              {% csrf_token %}
+              
+
+              <li class="list-group-item d-flex justify-content-between">
+
+              
+                <span>Total (USD)</span>
+                <input type="text" hidden  value="{{sum}}" name="cartsum"  class="form-control" style="border:none; width:100px" name="cartTotalAmount" />
+            
+                <strong>  $ {{sum}}  </strong>
+
+              </li>
+
+           
+
+              <li class="list-group-item mb-3 ">
+
+                 <select class="form-select" name="cartPaymentMode" >
+                <option selected>Select Your Payment Mode</option>
+                <option value="COD">COD</option>
+                <option value="NetBanking">NetBanking</option>
+                <option value="UPI"> UPI </option>
+                </select>
+
+              </li>
+            
+            </ul>
+
+            <hr class="my-4" />
+     
+
+            <input type="submit" class="w-100 mb-5 btn btn-primary btn-lg" id="placeOrderBTn" onclick="placeOrderBtn()" name="placeOrderBTn" value="Place Order"> 
+          </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function placeOrderBtn() {
+    window.alert("Order Placed");
+  }
+
+  $(".btn-number").click(function (e) {
+    e.preventDefault();
+
+    fieldName = $(this).attr("data-field");
+    type = $(this).attr("data-type");
+    var input = $("input[name='" + fieldName + "']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+      if (type == "minus") {
+        if (currentVal > input.attr("min")) {
+          input.val(currentVal - 1).change();
+        }
+        if (parseInt(input.val()) == input.attr("min")) {
+          $(this).attr("disabled", true);
+        }
+      } else if (type == "plus") {
+        if (currentVal < input.attr("max")) {
+          input.val(currentVal + 1).change();
+        }
+        if (parseInt(input.val()) == input.attr("max")) {
+          $(this).attr("disabled", true);
+        }
+      }
+    } else {
+      input.val(0);
+    }
+  });
+  $(".input-number").focusin(function () {
+    $(this).data("oldValue", $(this).val());
+  });
+  $(".input-number").change(function () {
+    minValue = parseInt($(this).attr("min"));
+    maxValue = parseInt($(this).attr("max"));
+    valueCurrent = parseInt($(this).val());
+
+    name = $(this).attr("name");
+    if (valueCurrent >= minValue) {
+      $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr(
+        "disabled"
+      );
+    } else {
+      alert("Sorry, the minimum value was reached");
+      $(this).val($(this).data("oldValue"));
+    }
+    if (valueCurrent <= maxValue) {
+      $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr(
+        "disabled"
+      );
+    } else {
+      alert("Sorry, the maximum value was reached");
+      $(this).val($(this).data("oldValue"));
+    }
+  });
+  $(".input-number").keydown(function (e) {
+    // Allow: backspace, delete, tab, escape, enter and .
+    if (
+      $.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+      // Allow: Ctrl+A
+      (e.keyCode == 65 && e.ctrlKey === true) ||
+      // Allow: home, end, left, right
+      (e.keyCode >= 35 && e.keyCode <= 39)
+    ) {
+      // let it happen, don't do anything
+      return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if (
+      (e.shiftKey || e.keyCode < 48 || e.keyCode > 57) &&
+      (e.keyCode < 96 || e.keyCode > 105)
+    ) {
+      e.preventDefault();
+    }
+  });
+</script>
+{% endblock body %}

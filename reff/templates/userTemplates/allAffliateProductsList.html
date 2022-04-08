@@ -1,0 +1,164 @@
+{% extends 'base.html' %} {% block title %} User Dashboard {% endblock title %} {% block body %}
+
+<div style="background-color: #d7dbe1;"> 
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<div class="container-fluid"> <a class="navbar-brand" href="">Brand Logo</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav me-auto mb-2 mb-md-0">
+				<li class="nav-item"> <a class="nav-link active" aria-current="page" href="/">Home</a> </li>
+			
+				<li class="nav-item"> <a class="nav-link" href="/userDashboard">User Dashboard</a> </li>
+			</ul>
+			<div class="d-flex">
+				<ul class="navbar-nav me-auto mb-2 mb-md-0">
+					<li class="nav-item"> <a class="nav-link" href="">Logged In As</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Id = {{ request.session.userLoggedUserId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Email = {{ request.session.userLoggedEmailId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Name = {{ request.session.userLoggedName }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="/userLogout">Logout</a> </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+
+		
+		<div class="container" >
+
+			<h2 class="text-center mt-4">List Of All Available Products For Affliate  </h2>
+		<h6 class="text-center mt-4">You Can Start Affliate Business From Here</h6>
+
+
+			
+
+			<div class="row mt-5 ">
+
+				
+	
+				<div class="col-2 bg-light">
+					<br>
+					<br>
+					<h4>Filters</h4>
+					<br>
+					<br>
+				
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+						<label class="form-check-label" for="flexCheckDefault">
+						Default checkbox
+						</label>
+					</div>
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+						<label class="form-check-label" for="flexCheckChecked">
+						Checked checkbox
+						</label>
+					</div>
+	
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+						<label class="form-check-label" for="flexCheckDefault">
+						Default checkbox
+						</label>
+					</div>
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+						<label class="form-check-label" for="flexCheckChecked">
+						Checked checkbox
+						</label>
+					</div>
+	
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+						<label class="form-check-label" for="flexCheckDefault">
+						Default checkbox
+						</label>
+					</div>
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+						<label class="form-check-label" for="flexCheckChecked">
+						Checked checkbox
+						</label>
+					</div>
+	
+	
+	
+				</div>
+			
+	
+				<div class="col-10">
+	
+					<div class="album py-5 bg-light py-3 px-3">
+						<div class="container  ">
+							<div class="row p-3">
+								{% for listAvailable in listAvailableProductsForAffliate %}
+									
+										
+										<div class="col-md-4">
+											<div class="card mb-4 shadow-sm">
+												<div id="carouselExampleControls{{ listAvailable.id }}" style="width: 100%;" class="carousel slide" data-bs-ride="carousel">
+													<div class="carousel-inner p-3">
+														<div class="carousel-item active"> <img src="media/{{ listAvailable.imageUrl_1 }}" class="d-block w-100" alt="..."> </div>
+														<div class="carousel-item"> <img src="media/{{ listAvailable.imageUrl_2 }}" class="d-block w-100" alt="..."> </div>
+													</div>
+													<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls{{ listAvailable.id }}" data-bs-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span> </button>
+													<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls{{ listAvailable.id }}" data-bs-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
+												</div>
+												<div class="card-body">
+													<h5 class="card-text mt-2">
+														{{ listAvailable.productName }}
+													</h5>
+													<hr>
+													<div class="d-flex justify-content-between align-items-center">
+														<h6 class="text-bold"> Price -  $ {{ listAvailable.productPrice }} </h6>
+														<h6 class="text-bold "> Flat -  $ 399 Off</h6> </div>
+													<br>
+
+													<form action="/allAffliateProductsList"  method="POST">
+														{% csrf_token %} 
+
+														<input type="hidden" name="generateAffliateProductId" value="{{ listAvailable.id }}">
+										
+												
+														<button type="submit" name="generateAffliateLink" class="btn btn-sm py-3 btn-outline-primary col-12"> Generate Unique Link </button>
+											
+
+													</form>
+
+													
+												</div>
+											</div>
+										</div> 
+										
+									
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+	
+	
+	
+				</div>
+	
+			   
+	
+			</div>
+	
+		</div>
+	
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+{% endblock body %}
+
+  

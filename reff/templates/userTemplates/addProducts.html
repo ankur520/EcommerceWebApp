@@ -1,0 +1,114 @@
+{% extends 'base.html' %} {% block title %} User Dashboard {% endblock title %} {% block body %}
+<style></style>
+<div style="background-color: #d7dbe1;"> 
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+	<div class="container-fluid"> <a class="navbar-brand" href="">Brand Logo</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<ul class="navbar-nav me-auto mb-2 mb-md-0">
+				<li class="nav-item"> <a class="nav-link active" aria-current="page" href="/">Home</a> </li>
+				<li class="nav-item"> <a class="nav-link" href="/userDashboard">User Dashboard</a> </li>
+				<!-- <li class="nav-item"> <a class="nav-link" href="/addProducts"> Add Products </a> </li>
+				
+				<li class="nav-item"> <a class="nav-link" href="/affliateProductsList">All Affliate Products</a> </li> -->
+				
+			</ul>
+			<div class="d-flex">
+				<ul class="navbar-nav me-auto mb-2 mb-md-0">
+					<li class="nav-item"> <a class="nav-link" href="">Logged In As</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Id = {{ request.session.userLoggedUserId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Email = {{ request.session.userLoggedEmailId }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="">Name = {{ request.session.userLoggedName }}</a> </li>
+					<li class="nav-item"> <a class="nav-link" href="/userLogout">Logout</a> </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>
+
+
+
+<div class="container mt-3 mb-5">
+	<br />
+	<h1 class="text-center">Add Product</h1>
+	<div class="container ">
+		<div class="row">
+			<div class=" col-md-2"></div>
+			<div class="col-12 col-md-8  bg-light py-5 px-5">
+				<form method="POST" id="indexForm" enctype="multipart/form-data" action="/addProducts" data_catrgory_url="{% url 'ajax_load_category' %}" data_subcat_url="{% url 'ajax_load_subCat' %}"> {% csrf_token %}
+					<div class="col">
+						<div class="form-floating mb-3">
+							<input type="text" name="addProductName" class="form-control" id="productName" placeholder="Product Name" />
+							<label for="productName">Product Name</label>
+						</div>
+						<div class="row mb-3">
+							<div class="col-4">
+								<select class="form-select form-select-sm" id="selectSelector" name="selectSelector">
+									<option selected>Select Sector Name</option> {% for forSector in showAllSectorss %}
+									<option value="{{forSector.id}}">{{ forSector.sectorName }}</option> {% endfor %} </select>
+							</div>
+							<div class="col-4">
+								<select class="form-select form-select-sm" id="selectCategory" name="selectCategory"> </select>
+							</div>
+							<div class="col-4">
+								<select class="form-select form-select-sm" name="selectSubCat" id="selectSubCat"> </select>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-sm-6 col-12">
+								<label class="form-label">Upload Images 1</label>
+								<input class="form-control" type="file" name="uploadImage1" accept=".jpg,.png,.jpeg" id="inputGroupFile04" /> </div>
+							<div class="col-sm-6 col-12">
+								<label class="form-label">Upload Images 2 </label>
+								<input class="form-control" type="file" name="uploadImage2" accept=".jpg,.png,.jpeg" id="inputGroupFile04" /> </div>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="number" name="addProductprice" name="" min="1" class="form-control" id="addProductprice" placeholder="Product Name" />
+							<label for="addProductprice">Product Price</label>
+						</div>
+						<div class="mb-3">
+							<label for="productDescription" class="form-label">Product Highlights</label>
+							<textarea class="form-control" name="productHighlights" id="productDescription" rows="6"></textarea>
+						</div>
+						<div class="mb-3">
+							<label for="productDescription" class="form-label">Product Detail Description</label>
+							<textarea class="form-control" name="productDescription" id="productDescription" rows="6"></textarea>
+						</div>
+						<button type="submit" class="btn btn-lg btn-primary" name="UserAddProductBtn">Add Product</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+</div>
+</div>
+<script>
+$("#selectSelector").change(function() {
+	var url = $("#indexForm").attr("data_catrgory_url")
+	var sectorId = $(this).val();
+	$.ajax({
+		url: url,
+		data: {
+			'sectorIddddd': sectorId
+		},
+		success: function(data) {
+			$("#selectCategory").html(data);
+		}
+	});
+})
+$("#selectCategory").change(function() {
+	var url = $("#indexForm").attr("data_subcat_url")
+	var catId = $(this).val();
+	// console.log("cat id = "+catId)
+	$.ajax({
+		url: url,
+		data: {
+			'catIddddd': catId
+		},
+		success: function(data) {
+			$("#selectSubCat").html(data);
+		}
+	});
+})
+</script> {% endblock body %}
